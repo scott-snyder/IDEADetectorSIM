@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(g4GMC_simulation)
 
 set(BASE_FLD
@@ -22,8 +22,11 @@ set(DET_FLD
 )
 
 
-SET(GCC_COVERAGE_LINK_FLAGS    "-ltcmalloc")
+#SET(GCC_COVERAGE_LINK_FLAGS    "-ltcmalloc")
 SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+
+add_compile_definitions( MT_OFF )
+set( ignore ${Geant4_DIR} )
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -42,6 +45,9 @@ endif()
 # Setup include directory for this project
 #
 include(${Geant4_USE_FILE})
+find_package(CLHEP)
+find_package(VecGeom)
+find_package(XercesC)
 
 #----------------------------------------------------------------------------
 # Find HepMC (required package)
@@ -56,8 +62,8 @@ find_package(podio)
 
 ####find gperftools 
 
-list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
-find_package(gperftools)
+#list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+#find_package(gperftools)
 
 #----------------------------------------------------------------------------
 # Find ROOT
@@ -97,6 +103,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 #--------------------------------------------------------------------
 # dictionary
+include_directories (${CLHEP_INCLUDE_DIR})
 ROOT_GENERATE_DICTIONARY(ClassesDict GMCG4Classes.hh LINKDEF ${PROJECT_SOURCE_DIR}/GEOMSRVC/src/LinkDef.hh)
 add_library(GMCG4ClassesDict SHARED
             ${PROJECT_SOURCE_DIR}/GEOMSRVC/src/GMCG4TrackerHit.cc
@@ -105,6 +112,7 @@ add_library(GMCG4ClassesDict SHARED
 	    ClassesDict.cxx
 	    )
 target_include_directories(GMCG4ClassesDict PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries (GMCG4ClassesDict PUBLIC CLHEP::CLHEP)
 
 add_custom_command(TARGET GMCG4ClassesDict POST_BUILD
 			  COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/libClassesDict* ${PROJECT_BINARY_DIR}/lib
@@ -132,6 +140,8 @@ foreach(detfld ${DET_FLD})
 	PUBLIC ${PROJECT_SOURCE_DIR}/${detfld}/include
 	)
 endforeach()
+target_include_directories(G4GMC PUBLIC ${XercesC_INCLUDE_DIR})
+target_link_libraries(G4GMC PUBLIC CLHEP::CLHEP VecGeom::vecgeom EDM4HEP::edm4hep)
 
 #--------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
@@ -151,6 +161,7 @@ target_link_libraries(g4GMC PUBLIC
 		      ${ROOT_LIBRARIES}
 		      EDM4HEP::edm4hep
 		      podio::podioRootIO
+                      CLHEP::CLHEP
 		      )
 
 #--------------------------------------------------------------------
