@@ -130,7 +130,7 @@ void HepMCG4PythiaInterface::SetUserParameters()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMC::GenEvent* HepMCG4PythiaInterface::GenerateHepMCEvent()
+std::unique_ptr<HepMC3::GenEvent> HepMCG4PythiaInterface::GenerateHepMCEvent()
 {
   static G4int nevent= 0; // event counter
 
@@ -139,11 +139,11 @@ HepMC::GenEvent* HepMCG4PythiaInterface::GenerateHepMCEvent()
 
   call_pyhepc(1);
 
-  HepMC::GenEvent* evt= hepevtio.read_next_event();
+  HepMC3::GenEvent* evt= hepevtio.read_next_event();
   evt-> set_event_number(nevent++);
   if(verbose>0) evt-> print();
 
-  return evt;
+  return std::unique_ptr<HepMC3::GenEvent> (evt);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

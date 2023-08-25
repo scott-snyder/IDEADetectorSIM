@@ -46,7 +46,7 @@ include(${Geant4_USE_FILE})
 #----------------------------------------------------------------------------
 # Find HepMC (required package)
 #
-find_package(HepMC REQUIRED)
+find_package(HepMC3 REQUIRED)
 
 #----------------------------------------------------------------------------
 # Find EDM/podio
@@ -76,7 +76,7 @@ include_directories(${ROOT_INCLUDE_DIRS})
 #
 include_directories(${PROJECT_SOURCE_DIR}/include
                     ${Geant4_INCLUDE_DIR}
-                    ${HEPMC_INCLUDE_DIR}
+                    ${HEPMC3_INCLUDE_DIR}
                     ${PROJECT_SOURCE_DIR}/../ConfigReader/include
 		    )
 foreach(basefld ${BASE_FLD})
@@ -146,8 +146,7 @@ target_link_libraries(g4GMC PUBLIC
 		      ${BASE_FLD}
 		      ${DET_FLD}
 		      ${Geant4_LIBRARIES}
-              	      ${HEPMC_LIBRARIES}
-		      ${HEPMC_FIO_LIBRARIES}
+              	      ${HEPMC3_LIBRARIES}
               	      ${PYTHIA6_LIBRARIES}
 		      ${ROOT_LIBRARIES}
 		      EDM4HEP::edm4hep

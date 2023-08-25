@@ -38,17 +38,17 @@
 #include "G4TransportationManager.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
+#include "HepMC3/GenVertex.h"
+#include "HepMC3/GenParticle.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 HepMCG4Interface::HepMCG4Interface()
-  : hepmcEvent(0)
 {
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 HepMCG4Interface::~HepMCG4Interface()
 {
-  delete hepmcEvent;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -67,19 +67,14 @@ G4bool HepMCG4Interface::CheckVertexInsideWorld
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void HepMCG4Interface::HepMC2G4(const HepMC::GenEvent* hepmcevt,
+void HepMCG4Interface::HepMC2G4(const HepMC3::GenEvent* hepmcevt,
                                 G4Event* g4event)
 {
-  for(HepMC::GenEvent::vertex_const_iterator vitr= hepmcevt->vertices_begin();
-      vitr != hepmcevt->vertices_end(); ++vitr ) { // loop for vertex ...
-
+  for (const HepMC3::ConstGenVertexPtr& vtx : hepmcevt->vertices()) { // loop for vertex ...
     // real vertex?
     G4bool qvtx=false;
-    for (HepMC::GenVertex::particle_iterator
-           pitr= (*vitr)->particles_begin(HepMC::children);
-         pitr != (*vitr)->particles_end(HepMC::children); ++pitr) {
-
-      if (!(*pitr)->end_vertex() && (*pitr)->status()==1) {
+    for (const HepMC3::ConstGenParticlePtr& pptr : vtx->particles_out()) {
+      if (!pptr->end_vertex() && pptr->status()==1) {
         qvtx=true;
         break;
       }
@@ -87,7 +82,7 @@ void HepMCG4Interface::HepMC2G4(const HepMC::GenEvent* hepmcevt,
     if (!qvtx) continue;
 
     // check world boundary
-    HepMC::FourVector pos= (*vitr)-> position();
+    HepMC3::FourVector pos= vtx->position();
     G4LorentzVector xvtx(pos.x(), pos.y(), pos.z(), pos.t());
     if (! CheckVertexInsideWorld(xvtx.vect()*mm)) continue;
 
@@ -96,14 +91,11 @@ void HepMCG4Interface::HepMC2G4(const HepMC::GenEvent* hepmcevt,
       new G4PrimaryVertex(xvtx.x()*mm, xvtx.y()*mm, xvtx.z()*mm,
                           xvtx.t()*mm/c_light);
 
-    for (HepMC::GenVertex::particle_iterator
-           vpitr= (*vitr)->particles_begin(HepMC::children);
-         vpitr != (*vitr)->particles_end(HepMC::children); ++vpitr) {
+    for (const HepMC3::ConstGenParticlePtr& pptr : vtx->particles_out()) {
+      if( pptr->status() != 1 ) continue;
 
-      if( (*vpitr)->status() != 1 ) continue;
-
-      G4int pdgcode= (*vpitr)-> pdg_id();
-      pos= (*vpitr)-> momentum();
+      G4int pdgcode= pptr->id();
+      pos= pptr->momentum();
       G4LorentzVector p(pos.px(), pos.py(), pos.pz(), pos.e());
       G4PrimaryParticle* g4prim=
         new G4PrimaryParticle(pdgcode, p.x()*GeV, p.y()*GeV, p.z()*GeV);
@@ -115,18 +107,14 @@ void HepMCG4Interface::HepMC2G4(const HepMC::GenEvent* hepmcevt,
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMC::GenEvent* HepMCG4Interface::GenerateHepMCEvent()
+std::unique_ptr<HepMC3::GenEvent> HepMCG4Interface::GenerateHepMCEvent()
 {
-  HepMC::GenEvent* aevent= new HepMC::GenEvent();
-  return aevent;
+  return std::make_unique<HepMC3::GenEvent>();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void HepMCG4Interface::GeneratePrimaryVertex(G4Event* anEvent)
 {
-  // delete previous event object
-  delete hepmcEvent;
-
   // generate next event
   hepmcEvent= GenerateHepMCEvent();
   if(! hepmcEvent) {
@@ -135,5 +123,5 @@ void HepMCG4Interface::GeneratePrimaryVertex(G4Event* anEvent)
     G4RunManager::GetRunManager()-> AbortRun();
     return;
   }
-  HepMC2G4(hepmcEvent, anEvent);
+  HepMC2G4(hepmcEvent.get(), anEvent);
 }

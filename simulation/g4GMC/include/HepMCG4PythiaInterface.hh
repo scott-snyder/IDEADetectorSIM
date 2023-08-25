@@ -32,7 +32,7 @@
 #define HEPMC_G4_PYTHIA_INTERFACE_H
 
 #include "HepMCG4Interface.hh"
-#include "HepMC/IO_HEPEVT.h"
+#include "HepMC3/ReaderHEPEVT.h"
 
 class HepMCG4PythiaMessenger;
 
@@ -42,13 +42,13 @@ class HepMCG4PythiaInterface : public HepMCG4Interface {
 protected:
   G4int verbose;
   G4int mpylist;
-  HepMC::IO_HEPEVT hepevtio;
+  HepMC3::ReaderHEPEVT hepevtio;
 
   HepMCG4PythiaMessenger* messenger;
 
   // In default, this is automatic conversion, Pythia->HEPEVT->HepMC,
   // by HepMC utilities.
-  virtual HepMC::GenEvent* GenerateHepMCEvent();
+  virtual std::unique_ptr<HepMC3::GenEvent> GenerateHepMCEvent() override;
 
 public:
   HepMCG4PythiaInterface();
