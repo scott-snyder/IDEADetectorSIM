@@ -241,7 +241,7 @@ static DRCaloIO* instance = 0;
 	m_particle.setTime(g_particle->GetProperTime());
 	m_particle.setMass(g_particle->GetMass());
 	m_particle.setVertex(vtxPos);
-	m_particle.setMomentum({g_particle->GetPx(),g_particle->GetPy(), g_particle->GetPz()});
+	m_particle.setMomentum(edm4hep::Vector3f(g_particle->GetPx(),g_particle->GetPy(), g_particle->GetPz()));
       
       }
     }
@@ -270,13 +270,13 @@ static DRCaloIO* instance = 0;
 	auto l_hit = s_caloHits->create();
 	l_hit.setCellID((fiber.ID));
 	l_hit.setEnergy(fiber.E);
-	l_hit.setPosition({fiber.Pos.x(),fiber.Pos.y(),fiber.Pos.z()});
+	l_hit.setPosition(edm4hep::Vector3f(fiber.Pos.x(),fiber.Pos.y(),fiber.Pos.z()));
       } 
       else if (fiber.Type == 0){
 	auto l_hit = c_caloHits->create();              
 	l_hit.setCellID((fiber.ID));
 	l_hit.setEnergy(fiber.E);
-	l_hit.setPosition({fiber.Pos.x(),fiber.Pos.y(),fiber.Pos.z()});
+	l_hit.setPosition(edm4hep::Vector3f(fiber.Pos.x(),fiber.Pos.y(),fiber.Pos.z()));
       }
       
     }
