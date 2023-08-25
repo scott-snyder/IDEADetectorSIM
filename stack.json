@@ -1,15 +1,19 @@
 {
   "version": 5,
-  "prev": "e8cdf388fd1cd664041dd19b0a4521ae7751bcb3",
-  "head": "e34a6bc40c6d5628e8ca70addfde8d96fab94bb8",
+  "prev": "e702976c0a6c22551117da374916d6c2a2cf3575",
+  "head": "3f0ee37cc2a5a8020c0e44eb1d352ee9c46e3bcd",
   "applied": [
-    "hepmc3.simulation"
+    "hepmc3.simulation",
+    "cmake.simulation"
   ],
   "unapplied": [],
   "hidden": [],
   "patches": {
     "hepmc3.simulation": {
       "oid": "e34a6bc40c6d5628e8ca70addfde8d96fab94bb8"
+    },
+    "cmake.simulation": {
+      "oid": "3f0ee37cc2a5a8020c0e44eb1d352ee9c46e3bcd"
     }
   }
 }
