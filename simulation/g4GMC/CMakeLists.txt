@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(g4GMC_simulation)
 
 set(BASE_FLD
@@ -24,6 +24,9 @@ set(DET_FLD
 
 SET(GCC_COVERAGE_LINK_FLAGS    "-ltcmalloc")
 SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+
+add_compile_definitions( MT_OFF )
+set( ignore ${Geant4_DIR} )
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
