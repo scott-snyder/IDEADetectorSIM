@@ -30,6 +30,7 @@
 
 #include "HepMCG4AsciiReader.hh"
 #include "HepMCG4AsciiReaderMessenger.hh"
+#include "HepMC3/Print.h"
 
 #include <iostream>
 #include <fstream>
@@ -38,33 +39,29 @@
 HepMCG4AsciiReader::HepMCG4AsciiReader()
   :  filename("xxx.dat"), verbose(0)
 {
-  asciiInput= new HepMC::IO_GenEvent(filename.c_str(), std::ios::in);
+  asciiInput= std::make_unique<HepMC3::ReaderAscii>(filename);
 
-  messenger= new HepMCG4AsciiReaderMessenger(this);
+  messenger= std::make_unique<HepMCG4AsciiReaderMessenger>(this);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 HepMCG4AsciiReader::~HepMCG4AsciiReader()
 {
-  delete asciiInput;
-  delete messenger;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void HepMCG4AsciiReader::Initialize()
 {
-  delete asciiInput;
-
-  asciiInput= new HepMC::IO_GenEvent(filename.c_str(), std::ios::in);
+  asciiInput= std::make_unique<HepMC3::ReaderAscii>(filename);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMC::GenEvent* HepMCG4AsciiReader::GenerateHepMCEvent()
+std::unique_ptr<HepMC3::GenEvent> HepMCG4AsciiReader::GenerateHepMCEvent()
 {
-  HepMC::GenEvent* evt= asciiInput-> read_next_event();
-  if(!evt) return 0; // no more event
+  auto evt = std::make_unique<HepMC3::GenEvent>();
+  if (!asciiInput->read_event(*evt)) return 0; // no more event
 
-  if(verbose>0) evt-> print();
+  if(verbose>0) HepMC3::Print::listing (*evt);
 
   return evt;
 }

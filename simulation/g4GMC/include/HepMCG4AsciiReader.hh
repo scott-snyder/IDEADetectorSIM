@@ -32,19 +32,19 @@
 #define HEPMC_G4_ASCII_READER_H
 
 #include "HepMCG4Interface.hh"
-#include "HepMC/IO_GenEvent.h"
+#include "HepMC3/ReaderAscii.h"
 
 class HepMCG4AsciiReaderMessenger;
 
 class HepMCG4AsciiReader : public HepMCG4Interface {
 protected:
   G4String filename;
-  HepMC::IO_GenEvent* asciiInput;
+  std::unique_ptr<HepMC3::ReaderAscii> asciiInput;
 
   G4int verbose;
-  HepMCG4AsciiReaderMessenger* messenger;
+  std::unique_ptr<HepMCG4AsciiReaderMessenger> messenger;
 
-  virtual HepMC::GenEvent* GenerateHepMCEvent();
+  virtual std::unique_ptr<HepMC3::GenEvent> GenerateHepMCEvent() override;
 
 public:
   HepMCG4AsciiReader();
