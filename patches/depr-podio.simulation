@@ -1,0 +1,6 @@
+Bottom: 753f527987c9dabea37bc28eef66d92e87135e3f
+Top:    753f527987c9dabea37bc28eef66d92e87135e3f
+Author: scott snyder <sss@karma>
+Date:   2023-08-25 15:58:30 -0400
+
+Avoid deprecation warnings from podio.
