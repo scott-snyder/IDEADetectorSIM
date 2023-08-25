@@ -686,6 +686,7 @@ namespace crd {
       << " In record: "
       << record
       <<std::endl;
+    std::abort();
   }
 
   // Return value of string as double, or throw.
@@ -703,6 +704,7 @@ namespace crd {
       << "In record: "
       << record
       <<std::endl;
+    std::abort();
   }
 
   // Return value of string as bool, or throw.
@@ -728,6 +730,7 @@ namespace crd {
       << "In record: "
       << record
       <<std::endl;
+    std::abort();
   }
 
   void SimpleConfigRecord::KnownType() const {
