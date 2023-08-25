@@ -139,7 +139,7 @@ namespace crd {
   void markDefault ( std::string const& rtype,
                      std::string const& name,
                      T const& t,
-                     SimpleConfig::DefaultCounter_type& counter,
+                     std::map<std::string, int>& counter,
                      bool print ){
     int& count(counter[name]);
     ++count;
