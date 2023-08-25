@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "GMCG4PodioManager.hh"
 #include "G4AutoLock.hh"
 

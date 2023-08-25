@@ -31,6 +31,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "RootIO.hh"
 
 #include <sstream>

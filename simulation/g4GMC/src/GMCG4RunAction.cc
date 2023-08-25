@@ -28,6 +28,7 @@
 /// \file GMCG4RunAction.cc
 /// \brief Implementation of the GMCG4RunAction class
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "GMCG4RunAction.hh"
 
 #include "G4Run.hh"

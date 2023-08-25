@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "GeomService.hh"
 #include "GeomHandle.hh"
 
