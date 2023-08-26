@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "DigitSteer.h"
 
 #include "DRCalo_FiberType.h"
