@@ -44,6 +44,7 @@ Cut& Selection::GetCut(unsigned int index)
 Cut& Selection::GetCut(TString name)
 {
   for (auto & i : m_sel)                                                                                        
-    if (!i.GetName().CompareTo(name)) return i;                                                                     
+    if (!i.GetName().CompareTo(name)) return i;
+  std::abort();
 }     
 
