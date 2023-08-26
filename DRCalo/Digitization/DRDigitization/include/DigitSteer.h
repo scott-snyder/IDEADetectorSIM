@@ -6,6 +6,7 @@
 #include <string>
 
 // podio includes
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "podio/EventStore.h"
 #include "podio/ROOTReader.h"
 #include "podio/ROOTWriter.h"
