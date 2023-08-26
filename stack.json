@@ -1,14 +1,15 @@
 {
   "version": 5,
-  "prev": "bdaf42a49034757fd0b24913cac0051dc18343fa",
-  "head": "2e45c18010e18b43aa61729fbc2f68ccc4bd56ec",
+  "prev": "7feff742763471b703ef5d229be456f88510ffe1",
+  "head": "7aa91f3cdded79b9065f517ee9bacb288e63aa3a",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
     "private.simulation",
     "warn-return.simulation",
     "warn-narrowing.simulation",
-    "depr-podio.simulation"
+    "depr-podio.simulation",
+    "edm4hep.DdAndCalibration"
   ],
   "unapplied": [],
   "hidden": [],
@@ -30,6 +31,9 @@
     },
     "depr-podio.simulation": {
       "oid": "2e45c18010e18b43aa61729fbc2f68ccc4bd56ec"
+    },
+    "edm4hep.DdAndCalibration": {
+      "oid": "7aa91f3cdded79b9065f517ee9bacb288e63aa3a"
     }
   }
 }
