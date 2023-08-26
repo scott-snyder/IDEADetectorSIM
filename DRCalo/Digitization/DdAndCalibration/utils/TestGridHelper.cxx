@@ -1,6 +1,7 @@
 #include "DR_CaloGridHelper.h"
 
 #include "edm4hep/CalorimeterHit.h"
+#include "edm4hep/MutableCalorimeterHit.h"
 
 #include <iostream>
 
@@ -28,26 +29,26 @@ int main()
   mygrid.Print();
   std::cout << "cazzo crasho 2" << std::endl;
   //Now testing adding a few fibers in random positions
-  edm4hep::CalorimeterHit mycalo;
+  edm4hep::MutableCalorimeterHit mycalo;
   mycalo.setPosition({1000.,1000.,1000.});
   mycalo.setEnergy(5000);
   std::cout << "cazzo crasho 2.5" << std::endl;
-  edm4hep::ConstCalorimeterHit const_mycalo = mycalo;
+  edm4hep::CalorimeterHit const_mycalo = mycalo;
   mygrid.Add(&const_mycalo);
   std::cout << "cazzo crasho 3" << std::endl;
-  edm4hep::CalorimeterHit mycalo1;
+  edm4hep::MutableCalorimeterHit mycalo1;
   mycalo1.setPosition({-1000.,1000.,300.});
-  edm4hep::ConstCalorimeterHit const_mycalo1 = mycalo1;
+  edm4hep::CalorimeterHit const_mycalo1 = mycalo1;
   mygrid.Add(&const_mycalo1);
   std::cout << "cazzo crasho 4" << std::endl;
-  edm4hep::CalorimeterHit mycalo2;
+  edm4hep::MutableCalorimeterHit mycalo2;
   mycalo2.setPosition({1000.,1000.,1000.});
-  edm4hep::ConstCalorimeterHit const_mycalo2 = mycalo2;
+  edm4hep::CalorimeterHit const_mycalo2 = mycalo2;
   mygrid.Add(&const_mycalo2);
   std::cout << "cazzo crasho 5" << std::endl;
-  edm4hep::CalorimeterHit mycalo3;
+  edm4hep::MutableCalorimeterHit mycalo3;
   mycalo3.setPosition({200.,100.,-200.});
-  edm4hep::ConstCalorimeterHit const_mycalo3 = mycalo3;
+  edm4hep::CalorimeterHit const_mycalo3 = mycalo3;
   mygrid.Add(&const_mycalo3);
   mygrid.Print();
   return 0;

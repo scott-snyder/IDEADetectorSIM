@@ -11,7 +11,7 @@
 #include <vector>
 #include <memory>
 
-typedef std::vector<edm4hep::ConstCalorimeterHit *> DR_CaloHitVec;
+typedef std::vector<edm4hep::CalorimeterHit *> DR_CaloHitVec;
 typedef   std::map<unsigned long long, DR_CaloHitVec > DR_CaloGrid;
 typedef unsigned long long DR_GridID;
 
@@ -37,7 +37,7 @@ class DR_CaloGridHelper
   void CreateGrid();
   double GetDelta() {return m_delta;}
   //  void Add(float theta, float phi, float energy);
-  void Add(edm4hep::ConstCalorimeterHit * caloHit); 
+  void Add(edm4hep::CalorimeterHit * caloHit); 
   void Reset();
   DR_CaloGrid &  GetGrid() {return m_caloGrid;}
   void EventDisplay(TString filename, float minCosTheta, float maxCosTheta, float minPhi, float maxPhi);
