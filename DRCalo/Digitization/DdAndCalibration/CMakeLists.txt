@@ -1,5 +1,5 @@
 # CMakeLists.txt for event package. It creates a library with dictionary and a main program
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 # Create a project:
 project( DRCalo_DdAndCalibration )
@@ -7,6 +7,9 @@ project( DRCalo_DdAndCalibration )
 find_package(EDM4HEP)
 find_package(ROOT REQUIRED)
 include(${ROOT_USE_FILE})
+
+add_compile_definitions( MT_OFF )
+set( ignore ${Geant4_DIR} )
 
 file(GLOB DdAndCalibration_h "include/*.h")
 file(GLOB DdAndCalibration_cxx "src/*.cxx")
