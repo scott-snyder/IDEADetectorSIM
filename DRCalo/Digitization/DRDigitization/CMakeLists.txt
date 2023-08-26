@@ -1,5 +1,19 @@
 # CMakeLists.txt for event package. It creates a library with dictionary and a main program
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+
+# cf. https://stackoverflow.com/questions/12021448/how-can-cmake-arguments-be-forwarded-to-externalproject
+# MUST be done before call to 'project'
+if( NOT CL_ARGS )
+  get_cmake_property(vars CACHE_VARIABLES)
+  foreach(var ${vars})
+    get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
+      if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
+          # message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
+          list(APPEND CL_ARGS "-D${var}=${${var}}")
+      endif()
+  endforeach()
+  set( CL_ARGS ${CL_ARGS} CACHE STRING "comment" )
+endif()
 
 # Create a project:
 project( DRCalo_DRDigitization )
@@ -17,9 +31,13 @@ find_package(podio)
 #---Define useful ROOT functions and macros (e.g. ROOT_GENERATE_DICTIONARY)
 include(${ROOT_USE_FILE})
 
+add_compile_definitions( MT_OFF )
+set( ignore ${Geant4_DIR} )
+
 include_directories(ROOT_BUG)
 include_directories(${CMAKE_INSTALL_PREFIX}/include/sipm)
 include_directories(${CMAKE_INSTALL_PREFIX}/include/DdAndCalibration)
+include_directories(${EDM4HEP_INCLUDE_DIR})
 link_directories(${CMAKE_INSTALL_PREFIX}/lib64)
 link_directories(${CMAKE_INSTALL_PREFIX}/lib)
 
@@ -29,17 +47,17 @@ ExternalProject_Add(DdAndCalibration
     PREFIX DdAndCalibration
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../DdAndCalibration
     BUILD_ALWAYS 1
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} 
+    CMAKE_ARGS ${CL_ARGS}
 )
 
-ExternalProject_Add(SimSiPM
-    GIT_REPOSITORY git@github.com:EdoPro98/SimSiPM.git
-    GIT_TAG main
-    PREFIX SimSiPM
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../SimSiPM
-    BUILD_ALWAYS 1
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} 
-)
+# ExternalProject_Add(SimSiPM
+#     GIT_REPOSITORY git@github.com:EdoPro98/SimSiPM.git
+#     GIT_TAG main
+#     PREFIX SimSiPM
+#     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../SimSiPM
+#     BUILD_ALWAYS 1
+#     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} 
+# )
 
 #add_dependencies(DRCalo_DRDigitization SimSiPM)
 
