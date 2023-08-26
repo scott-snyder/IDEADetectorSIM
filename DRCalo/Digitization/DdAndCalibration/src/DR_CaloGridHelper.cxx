@@ -70,7 +70,7 @@ double DR_CaloGridHelper::GetEnergy(DR_GridID id)
   if (m_caloGrid.find(id) == m_caloGrid.end()) return 0;
   double retval;
   retval = 0;  
-  for (edm4hep::ConstCalorimeterHit * hit : m_caloGrid[id]){
+  for (edm4hep::CalorimeterHit * hit : m_caloGrid[id]){
     retval += hit->getEnergy();
   }
   return retval;
@@ -125,7 +125,7 @@ std::vector<DR_GridID> DR_CaloGridHelper::ListOfAdjacentCellID(DR_GridID l_ID)
   m_caloGrid[id] = energy + GetEnergy(id); // This now assumes that the individual elements of the grid should be massless. I believe this is the right thing to do (for example, it wouldn't make sense to sum the 4-vectors of the individual fiber, if the fibers arise from a single particle). In any case, the effect should be very small for small size of the grid elements
   }*/
 
-void DR_CaloGridHelper::Add(edm4hep::ConstCalorimeterHit * caloHit)
+void DR_CaloGridHelper::Add(edm4hep::CalorimeterHit * caloHit)
 {
   static TVector3 l_hit;
   l_hit.SetXYZ(
