@@ -17,8 +17,8 @@ GMCLDFLAGS += -Wl,--start-group
 GMCLDFLAGS += -L${ZLIB_DIR}
 #
 ifdef GENFIT2SYS
-      GMCLDFLAGS += -L${GENFIT2SYS}/lib -lgenfit2
-      GMCSOFLAGS += -L${GENFIT2SYS}/lib -lgenfit2
+      GMCLDFLAGS += -L${GENFIT2SYS}/lib -L${GENFIT2SYS}/lib64 -lgenfit2
+      GMCSOFLAGS += -L${GENFIT2SYS}/lib -L${GENFIT2SYS}/lib64 -lgenfit2
       Includes   += -I$(GENFIT2SYS)/include/ -I$(EIGEN3SYS)/include/eigen3
       Flags      += -DHAVE_GENFIT -L${GENFIT2SYS}/lib 
 endif
