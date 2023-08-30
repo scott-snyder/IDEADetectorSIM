@@ -419,9 +419,9 @@ int main(int argc,char** argv)
 	edm4hep::Vector3f referencePoint(0,0,0);  // CHECK
 	
 	// lower triangular covariance matrix of the track parameters.
-	// the order of parameters is  d0, phi, omega, z0, tan(lambda).
+	// the order of parameters is  d0, phi, omega, z0, tan(lambda), time.
 	// the array is a row-major flattening of the matrix. 
-	std::array<float, 15> covMatrix; 
+	std::array<float, 21> covMatrix; 
 	
 	/* 
 	   0=00 1=10 2=11 3=20 4=21 5=22 6=30 7=31 8=32 9=33 10=40 11=41 12=42 13=43 14=44 
@@ -441,6 +441,12 @@ int main(int argc,char** argv)
 	covMatrix[12] = J_cov_JT[4][2];
 	covMatrix[13] = J_cov_JT[4][3];
 	covMatrix[14] = J_cov_JT[4][4];
+        covMatrix[15] = 0;
+        covMatrix[16] = 0;
+        covMatrix[17] = 0;
+        covMatrix[18] = 0;
+        covMatrix[19] = 0;
+        covMatrix[20] = 0;
 	
 	l_state.covMatrix = covMatrix;
 	
