@@ -1,7 +1,7 @@
 {
   "version": 5,
-  "prev": "ab0474c004968cbfa405aed768a188dee335e65c",
-  "head": "7bf9bb027bb82de3c1a35856cab4731cdd683c78",
+  "prev": "6c1c9d2f36a39aa8e4815fc09e953e3cbaef5e5b",
+  "head": "cf19e472067dcceefa2e288f45a723a627f10e80",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
@@ -15,7 +15,8 @@
     "depr-podio.DRDigitization",
     "warn.AnalysisTools",
     "cmake.AnalysisTools",
-    "covMatrix.converter"
+    "covMatrix.converter",
+    "cmake.converter"
   ],
   "unapplied": [],
   "hidden": [],
@@ -58,6 +59,9 @@
     },
     "covMatrix.converter": {
       "oid": "7bf9bb027bb82de3c1a35856cab4731cdd683c78"
+    },
+    "cmake.converter": {
+      "oid": "cf19e472067dcceefa2e288f45a723a627f10e80"
     }
   }
 }
