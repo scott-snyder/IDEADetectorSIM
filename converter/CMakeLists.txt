@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(g4GMC_converter)
 
 set(BASE_FLD
@@ -20,6 +20,8 @@ set(DET_FLD
 	DRFPIC
 	MUSPC
 )
+
+add_compile_definitions( MT_OFF )
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -42,14 +44,14 @@ include(${Geant4_USE_FILE})
 #----------------------------------------------------------------------------
 # Find HepMC (required package)
 #
-find_package(HepMC REQUIRED)
+find_package(HepMC3 REQUIRED)
 
 #----------------------------------------------------------------------------
 # Find EDM/podio
 #
 find_package(EDM4HEP)
 find_package(podio)
-#find_package(DD4hep)
+find_package(DD4hep)
 
 #----------------------------------------------------------------------------
 # Find ROOT
@@ -69,25 +71,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-include_directories($ENV{PRJBASE}/simulation/g4GMC/include
-		$ENV{PRJBASE}/simulation/g4GMC/GEOMSRV/include
- 		$ENV{PRJBASE}/analyzer/GMC/include
+include_directories(${PRJBASE}/simulation/g4GMC/include
+		${PRJBASE}/simulation/g4GMC/GEOMSRV/include
+ 		${PRJBASE}/analyzer/GMC/include
+ 		${GMCDIR}/include
                 ${Geant4_INCLUDE_DIR}
-                ${HEPMC_INCLUDE_DIR}
-                $ENV{PRJBASE}/simulation/ConfigReader/include
+                ${HEPMC3_INCLUDE_DIR}
+                ${PRJBASE}/simulation/ConfigReader/include
 		$ENV{ROOTSYS}/include/
 		$ENV{G4INCLUDE}
 		$ENV{ROMESYS}/include/
-		$ENV{PRJBASE}/simulation/g4GMC
+		${PRJBASE}/simulation/g4GMC
 		$ENV{CLHEP_INCLUDE_DIR}
 		$ENV{DD4hepINSTALL}
-		$ENV{PRJBASE}/../build/DRDigitization
+		${PRJBASE}/../build/DRDigitization
+		${PRJBASE}/DRCalo/Digitization/DRDigitization/include
+                ${CMAKE_INSTALL_PREFIX}/include
                 ${CMAKE_INSTALL_PREFIX}/include/sipm
 		${CMAKE_INSTALL_PREFIX}/include/DdAndCalibration
 )
 
 foreach(basefld ${BASE_FLD})
-include_directories($ENV{PRJBASE}/simulation/${basefld}/include)
+include_directories(${PRJBASE}/simulation/${basefld}/include)
 endforeach()
 
 # -------------------------------------
@@ -102,8 +107,7 @@ target_link_libraries(readHits PUBLIC
 		${BASE_FLD}
                 ${DET_FLD}
                 ${Geant4_LIBRARIES}
-                ${HEPMC_LIBRARIES}
-                ${HEPMC_FIO_LIBRARIES}
+                ${HEPMC3_LIBRARIES}
                 ${PYTHIA6_LIBRARIES}
                 ${ROOT_LIBRARIES}
 		Core
@@ -137,15 +141,19 @@ target_link_libraries(readHits PUBLIC
 		X11
 		EDM4HEP::edm4hep
 		podio::podioRootIO
+                DD4hep::DDCore
 		)
 
 target_link_directories(readHits PUBLIC
 		$ENV{CLHEP_LIB_DIR}
 		$ENV{G4LIB}
 		$ENV{SIM_INSTAL_DIR}/lib
-		$ENV{PRJBASE}/analyzer/GMC/obj
-		$ENV{PRJBASE}/../build/lib
-		$ENV{PRJBASE}/../build/lib64
+		${PRJBASE}/analyzer/GMC/obj
+		${PRJBASE}/../build/lib
+		${PRJBASE}/../build/lib64
+                ${GMCDIR}/obj
+		${CMAKE_INSTALL_PREFIX}/lib
+		${CMAKE_INSTALL_PREFIX}/lib64
 #		$ENV{GENFIT2SYS}/lib
 )	      
 
@@ -161,8 +169,7 @@ target_link_libraries(convertHits PUBLIC
                       ${BASE_FLD}
                       ${DET_FLD}
                       ${Geant4_LIBRARIES}
-                      ${HEPMC_LIBRARIES}
-                      ${HEPMC_FIO_LIBRARIES}
+                      ${HEPMC3_LIBRARIES}
                       ${PYTHIA6_LIBRARIES}
                       ${ROOT_LIBRARIES}
                       gfortran
@@ -174,7 +181,9 @@ target_link_directories(convertHits PUBLIC
                 $ENV{CLHEP_LIB_DIR}
                 $ENV{G4LIB}
                 $ENV{SIM_INSTAL_DIR}/lib
-		$ENV{PRJBASE}/analyzer/GMC/obj
+		${PRJBASE}/analyzer/GMC/obj
+		${CMAKE_INSTALL_PREFIX}/lib
+		${CMAKE_INSTALL_PREFIX}/lib64
 #               $ENV{GENFIT2SYS}/lib
 )
 
@@ -190,21 +199,23 @@ target_link_libraries(convertTracks PUBLIC
                       ${BASE_FLD}
                       ${DET_FLD}
                       ${Geant4_LIBRARIES}
-                      ${HEPMC_LIBRARIES}
-                      ${HEPMC_FIO_LIBRARIES}
+                      ${HEPMC3_LIBRARIES}
                       ${PYTHIA6_LIBRARIES}
                       ${ROOT_LIBRARIES}
              #         ${${PROJECT_NAME}_LIB}
                       gfortran
                      EDM4HEP::edm4hep
                      podio::podioRootIO
+                     DD4hep::DDCore
                      )
 
 target_link_directories(convertTracks PUBLIC
                 $ENV{CLHEP_LIB_DIR}
                 $ENV{G4LIB}
 		$ENV{SIM_INSTAL_DIR}/lib
-                $ENV{PRJBASE}/analyzer/GMC/obj
+                ${PRJBASE}/analyzer/GMC/obj
+		${CMAKE_INSTALL_PREFIX}/lib
+		${CMAKE_INSTALL_PREFIX}/lib64
 #               $ENV{GENFIT2SYS}/lib
 )
 
@@ -220,8 +231,7 @@ target_link_libraries(buildRecoLevelIDEAFile PUBLIC
                       ${BASE_FLD}
                       ${DET_FLD}
                       ${Geant4_LIBRARIES}
-                      ${HEPMC_LIBRARIES}
-                      ${HEPMC_FIO_LIBRARIES}
+                      ${HEPMC3_LIBRARIES}
                       ${PYTHIA6_LIBRARIES}
                       ${ROOT_LIBRARIES}
              #         ${${PROJECT_NAME}_LIB}
@@ -230,13 +240,14 @@ target_link_libraries(buildRecoLevelIDEAFile PUBLIC
                      podio::podioRootIO
 		     DRCalo_DRDigitizationLib 
 		     sipm
+                     DD4hep::DDCore
                      )
 
 target_link_directories(buildRecoLevelIDEAFile PUBLIC
                 $ENV{CLHEP_LIB_DIR}
                 $ENV{G4LIB}
 		$ENV{SIM_INSTAL_DIR}/lib
-                $ENV{PRJBASE}/analyzer/GMC/obj
+                ${PRJBASE}/analyzer/GMC/obj
 #               $ENV{GENFIT2SYS}/lib
 		${CMAKE_INSTALL_PREFIX}/lib64
 		${CMAKE_INSTALL_PREFIX}/lib
