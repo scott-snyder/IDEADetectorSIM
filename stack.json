@@ -1,7 +1,7 @@
 {
   "version": 5,
-  "prev": "120eccb3b791fafafb7fb160605b9e166f045f79",
-  "head": "e9ed38dc22189376433135adb86c9f8baf8b6476",
+  "prev": "10b7b5620df5f31331872acd99485ee111ceb970",
+  "head": "857232f8dfc58e411d94587b81b90fb113862a4a",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
@@ -18,7 +18,8 @@
     "covMatrix.converter",
     "cmake.converter",
     "build.gmc",
-    "podio-depr.converter"
+    "podio-depr.converter",
+    "cmake"
   ],
   "unapplied": [],
   "hidden": [],
@@ -70,6 +71,9 @@
     },
     "podio-depr.converter": {
       "oid": "e9ed38dc22189376433135adb86c9f8baf8b6476"
+    },
+    "cmake": {
+      "oid": "857232f8dfc58e411d94587b81b90fb113862a4a"
     }
   }
 }
