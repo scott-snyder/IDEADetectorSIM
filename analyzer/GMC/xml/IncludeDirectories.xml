@@ -1,4 +1,12 @@
   <IncludeDirectories>
     <IncludeDirectory>include/util</IncludeDirectory>
     <IncludeDirectory>$(GENFIT2SYS)/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/CDCH/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/EXCEP/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/GEOMSRVC/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/SVX/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/PHCV/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/PSHW/include</IncludeDirectory>
+    <IncludeDirectory>$(G4GMC)/../ConfigReader/include</IncludeDirectory>
+    <IncludeDirectory>$(CLHEP_ROOT)/include</IncludeDirectory>
   </IncludeDirectories>
