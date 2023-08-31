@@ -373,7 +373,7 @@ Bool_t GMCTTrackFitCDCH::Fit(GMCRecoTracks *aTrack) {
       cout<<" add vertex constrain " <<hitCoords(0)<<" "<<hitCoords(1)<<" "<<hitCoords(2)<< " with +- "<<sigmabeam<<endl;
   }
 
-  int ihit0dch=-1,ihit0svx=-1,ihit0pshw=-1;
+  int ihit0dch=-1,ihit0svx=-1;
   int nhitsdch=0,nhitssvx=0,nhitspshw=0;
   
   for(int ihit=0;ihit<nhits;ihit++){
@@ -636,12 +636,12 @@ Bool_t GMCTTrackFitCDCH::Fit(GMCRecoTracks *aTrack) {
             GetHResidualUnbiased()->Fill(10*fabs(state.getState()(3)),10*resid(0));
             GetHResidualBiased()->Fill(10*fabs(state.getState()(3)),ahit->GetfImpact()-10*fabs(state.getState()(3)));
           }else if(detid==1){
-            GMCSVXHit *ahit = (GMCSVXHit*) fBrHitsSVX->At(aTrack->GethitindexAt(ihit));
+            //GMCSVXHit *ahit = (GMCSVXHit*) fBrHitsSVX->At(aTrack->GethitindexAt(ihit));
             if(fDebug>9)
               cout<<detid<<" "<<ihit<<" track aver "<<state.getState()(3)<<" "<<state.getState()(4)<<" exact mes 0 0 dy,dz not biased "<<resid(0)<<" "<<resid(1)
                   <<" trk xyz "<<pos<<" mom "<<mom.Y()<<endl;
           }else if(detid==2){
-            GMCPSHWHit *ahit = (GMCPSHWHit*) fBrHitsPSHW->At(aTrack->GethitindexAt(ihit));
+            //GMCPSHWHit *ahit = (GMCPSHWHit*) fBrHitsPSHW->At(aTrack->GethitindexAt(ihit));
             if(fDebug>9)
               cout<<detid<<" "<<ihit<<" track aver "<<state.getState()(3)<<" "<<state.getState()(4)<<" exact mes 0 0 dy,dz not biased "<<resid(0)<<" "<<resid(1)
                   <<" trk xyz "<<pos<<" mom "<<mom.Y()<<endl;
@@ -831,7 +831,7 @@ Bool_t GMCTTrackFitCDCH::Fit2(GMCRecoTracks *aTrack) {
       cout<<" add vertex constrain " <<hitCoords(0)<<" "<<hitCoords(1)<<" "<<hitCoords(2)<< " with +- "<<sigmabeam<<endl;
   }
 
-  int ihit0dch=-1,ihit0svx=-1,ihit0pshw=-1;
+  int ihit0dch=-1,ihit0svx=-1;
   int nhitsdch=0,nhitssvx=0,nhitspshw=0;
 
   for(int ihit=0;ihit<nhits;ihit++){
@@ -1161,12 +1161,12 @@ Bool_t GMCTTrackFitCDCH::Fit2(GMCRecoTracks *aTrack) {
             GetHResidualUnbiased()->Fill(10*fabs(state.getState()(3)),10*resid(0));
             GetHResidualBiased()->Fill(10*fabs(state.getState()(3)),ahit->GetfImpact()-10*fabs(state.getState()(3)));
           }else if(detid==1){
-            GMCSVXHit *ahit = (GMCSVXHit*) fBrHitsSVX->At(aTrack->GethitindexAt(ihit));
+            //GMCSVXHit *ahit = (GMCSVXHit*) fBrHitsSVX->At(aTrack->GethitindexAt(ihit));
             if(fDebug>9)
               cout<<detid<<" "<<ihit<<" track aver "<<state.getState()(3)<<" "<<state.getState()(4)<<" exact mes 0 0 dy,dz not biased "<<resid(0)<<" "<<resid(1)
                   <<" trk xyz "<<pos<<" mom "<<mom.Y()<<endl;
           }else if(detid==2){
-            GMCPSHWHit *ahit = (GMCPSHWHit*) fBrHitsPSHW->At(aTrack->GethitindexAt(ihit));
+            //GMCPSHWHit *ahit = (GMCPSHWHit*) fBrHitsPSHW->At(aTrack->GethitindexAt(ihit));
             if(fDebug>9)
               cout<<detid<<" "<<ihit<<" track aver "<<state.getState()(3)<<" "<<state.getState()(4)<<" exact mes 0 0 dy,dz not biased "<<resid(0)<<" "<<resid(1)
                   <<" trk xyz "<<pos<<" mom "<<mom.Y()<<endl;
