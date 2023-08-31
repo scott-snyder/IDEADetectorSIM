@@ -1,12 +1,13 @@
 {
   "version": 5,
-  "prev": "20f447e85242474451e6d78c16ea7832df3bcdff",
-  "head": "81aed4bfadf46e23227355d582c25c8fe4650942",
+  "prev": "14bd533dda9c07650ab8998159ca2d39630c0684",
+  "head": "6b1c4f90df57406c7a25c66eb891a5a0cd6abe7d",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
     "private.simulation",
-    "warn-return.simulation"
+    "warn-return.simulation",
+    "warn-narrowing.simulation"
   ],
   "unapplied": [],
   "hidden": [],
@@ -22,6 +23,9 @@
     },
     "warn-return.simulation": {
       "oid": "81aed4bfadf46e23227355d582c25c8fe4650942"
+    },
+    "warn-narrowing.simulation": {
+      "oid": "6b1c4f90df57406c7a25c66eb891a5a0cd6abe7d"
     }
   }
 }
