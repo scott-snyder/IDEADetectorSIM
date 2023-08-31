@@ -1,0 +1,6 @@
+Bottom: 680a9a788f0af38e9cd01000a073073c3e52b68d
+Top:    13be5e92fe1d53d32c073d1f465e20644bee8b40
+Author: scott snyder <sss@karma>
+Date:   2023-08-25 15:40:39 -0400
+
+A few CMake fixes.
