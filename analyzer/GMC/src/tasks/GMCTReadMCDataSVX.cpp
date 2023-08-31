@@ -78,7 +78,7 @@ void GMCTReadMCDataSVX::Event()
 }
 
 //______________________________________________________________________________
-void GMCTReadMCDataSVX::LoadEvent(Int_t nev) {
+void GMCTReadMCDataSVX::LoadEvent(Int_t /*nev*/) {
 
   fBrDataSvx=gAnalyzer->GetSVXGeantSteps();
   fBrDataTrk=gAnalyzer->GetGeantTracks();

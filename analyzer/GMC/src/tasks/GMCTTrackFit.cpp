@@ -169,7 +169,7 @@ void GMCTTrackFit::Event() {
 }
 
 //______________________________________________________________________________
-void GMCTTrackFit::LoadEvent(Int_t nev) {
+void GMCTTrackFit::LoadEvent(Int_t /*nev*/) {
 
   //return the nev-th event from data tree
   //  fDataTree->GetEntry(nev-1);
@@ -439,7 +439,7 @@ Double_t DISTANCE(TVector3 wpos,TVector3 wdir,TVector3 trk_pos,TVector3 trk_dir)
 }
 
 //__________________________________________________________________________
-void fcn(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag){
+void fcn(Int_t &/*npar*/, Double_t */*gin*/, Double_t &f, Double_t *par, Int_t /*iflag*/){
 
   Double_t chisquare=0.;  
   Double_t sigma=0.12;//mm *DRIFTVELOCITY;//ns
@@ -568,7 +568,7 @@ Bool_t GMCTTrackFit::Fit(GMCRecoTracks *aTrack) {
     TVector3 wire_dir = fGeometry->Getwire_dir(nwire);
 
     
-    Double_t trk_impact_par=DISTANCE(wire_pos,wire_dir,xyz0,pdir0);
+    //Double_t trk_impact_par=DISTANCE(wire_pos,wire_dir,xyz0,pdir0);
     Double_t b_meas = ahit->GetfImpact();
 
     //fill mesuarements
@@ -860,5 +860,6 @@ Bool_t GMCTTrackFit::Fit(GMCRecoTracks *aTrack) {
   
   
   delete fitter;
+  return true;
 }
 
