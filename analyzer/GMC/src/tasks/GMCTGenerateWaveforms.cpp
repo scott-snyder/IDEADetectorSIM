@@ -254,7 +254,7 @@ void GMCTGenerateWaveforms::SetSignalParameters() {
   Double_t ro=3.*Rwire*0.1*0.5; // distanza alla quale si forma la valanga (in cm)         
   Double_t to=pow(ro,2)*logRat/(2.*mob*Volt); //in sec
 //  Double_t tMax = (TMath::Power(Rtube,2) - TMath::Power(Rwire,2))*logRat/
-    (2.*mob*Volt);
+//    (2.*mob*Volt);
   cout<<"to: "<<to<<endl;        
   fVo = -0.5*TMath::Qe()/(2.*logRat*to)*ResistRR*(1.-reflect); // valore massimo del segnale
   fVo *= 1000.; // VO ESPRESSO in mV      
@@ -373,7 +373,7 @@ void GMCTGenerateWaveforms::CreateSignal(Double_t time, Double_t pValue) {
 
   cout<<"bin charge: "<<binCharge<<"   "<<rumpUp<<endl;
 
-  Float_t scoeff;
+  Float_t scoeff = 1;
   Int_t kBin = 0;   
   for (; kBin<=rumpUp; kBin++){  
 
