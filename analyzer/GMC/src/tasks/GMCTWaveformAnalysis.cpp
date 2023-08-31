@@ -86,7 +86,7 @@ void GMCTWaveformAnalysis::Event() {
   for (int iwave=0;iwave<fBrDataWave->GetEntries();iwave++) {
 
     GMCWaveformData *wv = (GMCWaveformData *)fBrDataWave->At(iwave);
-    Int_t npeaks = FindPeaks(wv->GetfNpoints(), wv->GetfSignalL());
+    /*Int_t npeaks =*/ FindPeaks(wv->GetfNpoints(), wv->GetfSignalL());
 
   }
 

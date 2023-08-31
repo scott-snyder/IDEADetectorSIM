@@ -93,7 +93,7 @@ void GMCTReadMCDataCDCH::Event() {
 }
 
 //______________________________________________________________________________
-void GMCTReadMCDataCDCH::LoadEvent(Int_t nev) {
+void GMCTReadMCDataCDCH::LoadEvent(Int_t /*nev*/) {
 
   fBrDataDch=gAnalyzer->GetDCGeantSteps();
   fBrDataTrk=gAnalyzer->GetGeantTracks();
@@ -287,7 +287,7 @@ void GMCTReadMCDataCDCH::DefineHitsInDCH2() {
         //          sign=w.cross(mom).dot(hit_pca-p2);
 
         //small correction (~10mum) forr track is not line
-        double dl=(p2-pos).perp();
+        //double dl=(p2-pos).perp();
         CLHEP::Hep3Vector b(0,0,gAnalyzer->GetGSP()->GetBz());
         CLHEP::Hep3Vector pcurv=p2;//+b.cross(mom)/mom.perp()*dl*dl/2/(mom.perp()*3);
         hit_dca=(pcurv-hit_pca).mag();
