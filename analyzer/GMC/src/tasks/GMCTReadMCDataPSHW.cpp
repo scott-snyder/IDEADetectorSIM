@@ -77,7 +77,7 @@ void GMCTReadMCDataPSHW::Event()
 }
 
 //______________________________________________________________________________
-void GMCTReadMCDataPSHW::LoadEvent(Int_t nev) {
+void GMCTReadMCDataPSHW::LoadEvent(Int_t /*nev*/) {
 
   fBrDataPshw=gAnalyzer->GetPSHWGeantSteps();
   fBrDataTrk=gAnalyzer->GetGeantTracks();
