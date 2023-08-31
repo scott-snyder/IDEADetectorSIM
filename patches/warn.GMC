@@ -1,0 +1,6 @@
+Bottom: fe1d6a0b173301b98429a7ed3287262e857f20e6
+Top:    fe1d6a0b173301b98429a7ed3287262e857f20e6
+Author: scott snyder <sss@karma>
+Date:   2023-08-31 11:16:30 -0400
+
+Fix compilation warnings.
