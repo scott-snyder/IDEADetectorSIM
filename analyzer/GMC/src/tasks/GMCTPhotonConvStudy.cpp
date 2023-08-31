@@ -256,7 +256,7 @@ void GMCTPhotonConvStudy::FindPhotonInter() {
 			_phPrps.back().mom = *aMCTrack->GetfMomentum();
 		}
 	}
-	for (int iph=0; iph<_phPrps.size(); ++iph) {
+	for (size_t iph=0; iph<_phPrps.size(); ++iph) {
 		for(int itk=0;itk<nmctrack;++itk){
 			GMCGeantTrack* aMCTrack = ((GMCGeantTrack*)fBrDataTrk->At(itk));
 			if(aMCTrack&&aMCTrack->GetfParentID()==_phPrps[iph].ids.TrkID) {
@@ -271,10 +271,10 @@ void GMCTPhotonConvStudy::FindPhotonInter() {
 		}
 
 		std::vector<pIDs> &dPart = _phPrps[iph].secPart;
-		for (int iDgt=0; iDgt<dPart.size(); ++iDgt) {
+		for (size_t iDgt=0; iDgt<dPart.size(); ++iDgt) {
 			GMCGeantTrack* aMCTrack = ((GMCGeantTrack*)fBrDataTrk->At(dPart[iDgt].nTrk));
 			if (aMCTrack->GetfPDGCode()==11) {
-				for (int jDgt=0; jDgt<dPart.size(); ++jDgt) {
+				for (size_t jDgt=0; jDgt<dPart.size(); ++jDgt) {
 					if (jDgt!=iDgt) {
 						GMCGeantTrack* aMCTrackPs = ((GMCGeantTrack*)fBrDataTrk->At(dPart[jDgt].nTrk));
 //						if (aMCTrackPs->GetfPDGCode()==-11 && (_phPrps[iph].intVert[iDgt]-_phPrps[iph].intVert[jDgt]).Mag()<1e-3 ) {
@@ -304,7 +304,7 @@ void GMCTPhotonConvStudy::FindPhotonInter() {
 
 	if (_fDebug>0) {
 		std::cout<<"Event: "<<gAnalyzer->GetCurrentEventNumber()<<" n pairs found "<<_pairs.size()<<std::endl;
-		for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+		for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 			std::cout<<"Pair tot E "<<_pairs[iPr].elData.eStart+_pairs[iPr].psData.eStart<<" vertex "<<_pairs[iPr].vert.X()<<" "<<_pairs[iPr].vert.Y()<<" "<<_pairs[iPr].vert.Z()<<std::endl;
 		}
 	}
@@ -314,7 +314,7 @@ void GMCTPhotonConvStudy::FindPhotonInter() {
 void GMCTPhotonConvStudy::FindPairLoss() {
 
 //	std::cout<<"Event: "<<gAnalyzer->GetCurrentEventNumber()<<" n pairs found "<<_pairs.size()<<std::endl;
-	for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+	for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 		pairProp &pair = _pairs[iPr];
 		pair.shellId=-1;
 		pair.elData.eLossInRad=0;
@@ -376,7 +376,7 @@ void GMCTPhotonConvStudy::FindPairDCHHits() {
 
 	Int_t nhitsdch = fBrHitsDC->GetEntriesFast();
 
-	for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+	for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 		pairProp &pair = _pairs[iPr];
 
 		//sort traks DCH hits by tof
@@ -398,7 +398,7 @@ void GMCTPhotonConvStudy::FindPairDCHHits() {
 	    if (_fDebug>=2) {
 	    	std::cout<<"electron in shell "<<pair.shellId<<" time in Scint "<<pair.elData.timeScIn<<std::endl;
 	    }
-		for(int ihit=0;ihit<elHitvec.size();ihit++){
+		for(size_t ihit=0;ihit<elHitvec.size();ihit++){
 			if (_fDebug>=2) {
 				GMCDCHHit *ahit = (GMCDCHHit*) fBrHitsDC->At(elHitvec[ihit].second);
 				fGeometry->GetCellHandle()->SelectCellDet(ahit->GetfCellId());
@@ -431,7 +431,7 @@ void GMCTPhotonConvStudy::FindPairDCHHits() {
 	    if (_fDebug>=2) {
 	    	std::cout<<"positron in shell "<<pair.shellId<<" time in Scint "<<pair.psData.timeScIn<<std::endl;
 	    }
-		for(int ihit=0;ihit<psHitvec.size();ihit++){
+		for(size_t ihit=0;ihit<psHitvec.size();ihit++){
 			if (_fDebug>=2) {
 				GMCDCHHit *ahit = (GMCDCHHit*) fBrHitsDC->At(psHitvec[ihit].second);
 				fGeometry->GetCellHandle()->SelectCellDet(ahit->GetfCellId());
@@ -469,7 +469,7 @@ void GMCTPhotonConvStudy::doPlot() {
 	Int_t nGoodPhoton=0;
 	double photonTheta=-1000;
 	double photonPhi=-1000;
-	for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+	for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 		++nGoodPhoton;
 		pairProp &pair = _pairs[iPr];
 		GMCGeantTrack* aMCTrack = ((GMCGeantTrack*)fBrDataTrk->At(_phPrps[pair.phId].ids.nTrk));
@@ -603,7 +603,7 @@ void GMCTPhotonConvStudy::doPlot() {
 
 	double pairThOutSct=-1000.0;
 	double pairPhiOutSct=-1000.0;
-	for (int iTrkPM=0; iTrkPM<_trkPairMap.size(); ++iTrkPM) {
+	for (size_t iTrkPM=0; iTrkPM<_trkPairMap.size(); ++iTrkPM) {
 	  vertChek &vertc = _pairsInfo[_trkPairMap[iTrkPM].first];
 	  if (_trkPairMap[iTrkPM].second==0) {
 		  pairThOutSct=vertc.momIn0[vertc.nPart].Theta();
@@ -621,9 +621,9 @@ void GMCTPhotonConvStudy::doPlot() {
 	  }
 	}
 
-	for (int iph=0; iph<_phPrps.size(); ++iph) {
+	for (size_t iph=0; iph<_phPrps.size(); ++iph) {
 		bool noPair=true;
-		for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+		for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 			if (_pairs[iPr].phId==iph) {
 				noPair=false;
 				break;
@@ -663,7 +663,7 @@ void GMCTPhotonConvStudy::FindFittableTracks(){
 	_pairsInfo.clear();
 
 	int nFtTrk=0;
-	for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+	for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 		pairProp &pair = _pairs[iPr];
 		if (pair.elData.dchHitsAllSL.size()>5) { ++nFtTrk; }
 		if (pair.psData.dchHitsAllSL.size()>5) { ++nFtTrk; }
@@ -674,7 +674,7 @@ void GMCTPhotonConvStudy::FindFittableTracks(){
 
 //	  for(int i=0;i<nFtTrk;i++){
 	int i=-1;
-	for (int iPr=0; iPr<_pairs.size(); ++iPr) {
+	for (size_t iPr=0; iPr<_pairs.size(); ++iPr) {
 		pairProp &pair = _pairs[iPr];
 		for (int iPart=0; iPart<2; ++iPart) {
 			partData *tpart;
