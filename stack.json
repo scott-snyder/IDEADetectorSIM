@@ -1,7 +1,7 @@
 {
   "version": 5,
-  "prev": "f18eb32294ffdcd472ae1744b7c4675be322a35a",
-  "head": "3ab16c44784eb76f9cb783d3565fe8382da63968",
+  "prev": "d14786b90e49ed3dc44a7cda61e65b5f35061816",
+  "head": "edffc90a3e5ea2b0b5ca28523ebf043d19344c71",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
@@ -10,7 +10,8 @@
     "warn-narrowing.simulation",
     "depr-podio.simulation",
     "edm4hep.DdAndCalibration",
-    "cmake.DdAndCalibration"
+    "cmake.DdAndCalibration",
+    "cmake.DRDigitization"
   ],
   "unapplied": [],
   "hidden": [],
@@ -38,6 +39,9 @@
     },
     "cmake.DdAndCalibration": {
       "oid": "3ab16c44784eb76f9cb783d3565fe8382da63968"
+    },
+    "cmake.DRDigitization": {
+      "oid": "edffc90a3e5ea2b0b5ca28523ebf043d19344c71"
     }
   }
 }
