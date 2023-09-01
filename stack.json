@@ -1,7 +1,7 @@
 {
   "version": 5,
-  "prev": "2cb5e143e5187087a816e15e3ae35d94148a1d8f",
-  "head": "d6a5cf4014a3fde9021bcf0dfb91f9ab535cb76b",
+  "prev": "f3a3107c4916075d77f5e39e63c4159f546d6806",
+  "head": "893442560d33fc6e1fae910d6a8b631e6b0c245d",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
@@ -20,7 +20,8 @@
     "build.gmc",
     "podio-depr.converter",
     "cmake",
-    "warn.GMC"
+    "warn.GMC",
+    "geant11"
   ],
   "unapplied": [],
   "hidden": [],
@@ -78,6 +79,9 @@
     },
     "warn.GMC": {
       "oid": "d6a5cf4014a3fde9021bcf0dfb91f9ab535cb76b"
+    },
+    "geant11": {
+      "oid": "893442560d33fc6e1fae910d6a8b631e6b0c245d"
     }
   }
 }
