@@ -35,6 +35,7 @@ add_compile_definitions( MT_OFF )
 set( ignore ${Geant4_DIR} )
 
 include_directories(ROOT_BUG)
+include_directories(${CMAKE_INSTALL_PREFIX}/include)
 include_directories(${CMAKE_INSTALL_PREFIX}/include/sipm)
 include_directories(${CMAKE_INSTALL_PREFIX}/include/DdAndCalibration)
 include_directories(${EDM4HEP_INCLUDE_DIR})
