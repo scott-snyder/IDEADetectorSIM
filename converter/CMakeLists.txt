@@ -51,7 +51,7 @@ find_package(HepMC3 REQUIRED)
 #
 find_package(EDM4HEP)
 find_package(podio)
-#find_package(DD4hep)
+find_package(DD4hep)
 
 #----------------------------------------------------------------------------
 # Find ROOT
@@ -86,6 +86,7 @@ include_directories(${PRJBASE}/simulation/g4GMC/include
 		$ENV{DD4hepINSTALL}
 		${PRJBASE}/../build/DRDigitization
 		${PRJBASE}/DRCalo/Digitization/DRDigitization/include
+                ${CMAKE_INSTALL_PREFIX}/include
                 ${CMAKE_INSTALL_PREFIX}/include/sipm
 		${CMAKE_INSTALL_PREFIX}/include/DdAndCalibration
 )
@@ -140,6 +141,7 @@ target_link_libraries(readHits PUBLIC
 		X11
 		EDM4HEP::edm4hep
 		podio::podioRootIO
+                DD4hep::DDCore
 		)
 
 target_link_directories(readHits PUBLIC
@@ -149,6 +151,7 @@ target_link_directories(readHits PUBLIC
 		${PRJBASE}/analyzer/GMC/obj
 		${PRJBASE}/../build/lib
 		${PRJBASE}/../build/lib64
+                ${GMCDIR}/obj
 		${CMAKE_INSTALL_PREFIX}/lib
 		${CMAKE_INSTALL_PREFIX}/lib64
 #		$ENV{GENFIT2SYS}/lib
@@ -203,6 +206,7 @@ target_link_libraries(convertTracks PUBLIC
                       gfortran
                      EDM4HEP::edm4hep
                      podio::podioRootIO
+                     DD4hep::DDCore
                      )
 
 target_link_directories(convertTracks PUBLIC
@@ -236,6 +240,7 @@ target_link_libraries(buildRecoLevelIDEAFile PUBLIC
                      podio::podioRootIO
 		     DRCalo_DRDigitizationLib 
 		     sipm
+                     DD4hep::DDCore
                      )
 
 target_link_directories(buildRecoLevelIDEAFile PUBLIC
