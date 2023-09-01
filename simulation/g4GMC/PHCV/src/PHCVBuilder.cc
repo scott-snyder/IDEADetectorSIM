@@ -22,6 +22,7 @@
 #include "G4VisAttributes.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4UserLimits.hh"
+#include "G4Version.hh"
 
 #include "GeomService.hh"
 #include "GeomHandle.hh"
@@ -104,7 +105,12 @@ VolumeInfo PHCVBuilder::construct( G4LogicalVolume* mother/*, double zOff*/ ){
 //			  if ( debugLayer ) {
 //				  std::cout<<"Sub vol: "<<ivl<<" vol name: "<<tmpVolName<<std::endl;
 //			  }
-			  if (tmpVolName.contains(cdchSrvShName)) {
+#if G4VERSION_NUMBER >= 1100
+			  if (G4StrUtil::contains(tmpVolName,cdchSrvShName.c_str()))
+#else
+			  if (tmpVolName.contains(cdchSrvShName))
+#endif
+                          {
 				  if ( debugLayer ) {
 					  std::cout<<"Service vol found: "<<ivl<<" vol name: "<<tmpVolName<<std::endl;
 				  }

@@ -27,6 +27,7 @@
 #include "G4VisAttributes.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4UserLimits.hh"
+#include "G4Version.hh"
 
 //#include "GeometryService/inc/GeometryService.hh"
 #include "GeomService.hh"
@@ -210,7 +211,12 @@ VolumeInfo CDCHtrackerBuilder::constructTracker( G4LogicalVolume* mother/*, doub
                                 int nSub=wall->getNShells();
                                 for (int ishell=0; ishell<nSub; ishell++){
                                         G4String iWallShellMat = wall->getMaterialsName()->at(ishell);
-                                        if ( iWallShellMat.contains("Gas") ) {
+#if G4VERSION_NUMBER >= 1100
+                                        if ( G4StrUtil::contains (iWallShellMat, "Gas") )
+#else
+                                        if ( iWallShellMat.contains("Gas") )
+#endif
+                                        {
                                                 innerWallOuterRadius-=wall->getThicknesses()->at(ishell);
                                         }
                                 }
@@ -699,7 +705,12 @@ VolumeInfo CDCHtrackerBuilder::buildWall(Wall *wall, CDCHtracker::EnCapType endc
                         int nSub=wall->getNShells();
                         for (int ishell=0; ishell<nSub; ishell++){
                                 G4String iWallShellMat = wall->getMaterialsName()->at(ishell);
-                                if ( iWallShellMat.contains("Gas") ) {
+#if G4VERSION_NUMBER >= 1100
+                                if ( G4StrUtil::contains (iWallShellMat, "Gas") )
+#else
+                                if ( iWallShellMat.contains("Gas") )
+#endif
+                                {
                                         rMax-=wall->getThicknesses()->at(ishell);
                                         skipSub=ishell;
                                 }
@@ -855,7 +866,11 @@ double CDCHtrackerBuilder::constructSpiderWeb(G4LogicalVolume* localMother, crd:
 void CDCHtrackerBuilder::constructWireAnchoring(G4LogicalVolume* localMother, crd::SimpleConfig const& config, double spdWebBaseExcess) {
         GeomHandle<CDCHtracker> cdchtracker;
 
+#if G4VERSION_NUMBER >= 1100
+        bool isDownStream = G4StrUtil::contains (localMother->GetName(), "_R");
+#else
         bool isDownStream = localMother->GetName().contains("_R");
+#endif
         string endCapSide;
         if (isDownStream) {
                 endCapSide = "_R";
@@ -1548,7 +1563,11 @@ void CDCHtrackerBuilder::constructSignalCables(G4LogicalVolume* localMother, crd
         double cableFractionOnREP = config.getDouble("cdch.cableFractionOnREP",0.0);
         if (cableFractionOnREP>1.0) { cableFractionOnREP=1.0; }
 
+#if G4VERSION_NUMBER >= 1100
+        bool isUpStream = G4StrUtil::contains (localMother->GetName(), "_L");
+#else
         bool isUpStream = localMother->GetName().contains("_L");
+#endif
         std::string sideName;
         bool locateCables(false);
         int NSlayerToSkip=0;
@@ -1750,7 +1769,11 @@ void CDCHtrackerBuilder::constructSignalCables(G4LogicalVolume* localMother, crd
 void CDCHtrackerBuilder::constructHvCables(G4LogicalVolume* localMother, crd::SimpleConfig const& config) {
         GeomHandle<CDCHtracker> cdchtracker;
 
+#if G4VERSION_NUMBER >= 1100
+        bool isDownStream = G4StrUtil::contains (localMother->GetName(), "_R");
+#else
         bool isDownStream = localMother->GetName().contains("_R");
+#endif
 
         double minR, maxR;
         char tShapeName[50], tVolName[50];
@@ -1936,7 +1959,14 @@ void CDCHtrackerBuilder::constructStepLimiters(){
           iDau = tracker->GetDaughter(iDaughter);
       if (!iDau) break;
       //            cout<<"Vol Name "<< iDau->GetName()<<" is Tracking: "<<iDau->GetName().contains("volS")<<endl;
-          if ( iDau->GetName().contains("gvolS") || iDau->GetName().contains("wvolS") ) iDau->GetLogicalVolume()->SetUserLimits(stepLimit);
+#if G4VERSION_NUMBER >= 1100
+          if ( G4StrUtil::contains (iDau->GetName(), "gvolS") || G4StrUtil::contains (iDau->GetName(), "wvolS") )
+#else
+          if ( iDau->GetName().contains("gvolS") || iDau->GetName().contains("wvolS") )
+#endif
+          {
+            iDau->GetLogicalVolume()->SetUserLimits(stepLimit);
+          }
   }
 
   cout<<"CDCH Step limits set"<<endl;
