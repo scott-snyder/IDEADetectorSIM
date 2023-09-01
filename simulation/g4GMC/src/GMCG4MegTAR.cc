@@ -33,6 +33,7 @@
 #include "G4PVReplica.hh"
 #include "G4Region.hh"
 #include "G4ProductionCuts.hh"
+#include "G4Version.hh"
 
 
 GMCG4MegTAR::~GMCG4MegTAR()
@@ -365,7 +366,13 @@ void GMCG4MegTAR::construct(G4LogicalVolume *parent)
       unsigned int nPhysVol = TAR0Assembly->TotalImprintedVolumes();
       unsigned int iPhysVol;
       for (iPhysVol = 0; iPhysVol < nPhysVol; iPhysVol++) {
-         if ((*physVol) &&  (*physVol)->GetName().contains("TRGTLogical")) {
+         if ((*physVol) && 
+#if G4VERSION_NUMBER >= 1100
+             G4StrUtil::contains ((*physVol)->GetName(), "TRGTLogical")
+#else
+             (*physVol)->GetName().contains("TRGTLogical")
+#endif
+             ) {
             targetVolume = (*physVol);
             break;
          }
