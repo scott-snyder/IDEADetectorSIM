@@ -74,15 +74,15 @@ else
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MYG4LIB}
 fi
 
-ROMESYS=@ROME_INST_DIR@
-
-if [[ $ROMESYS == *ROME_INST_DIR* ]]
-then
-    echo 'ROMESYS will be configured after installation'
-else
-    echo "ROMESYS is set to " ${ROMESYS}
-    export PATH=$ROMESYS/bin:${PATH}:${INSTALL_DIR}/bin
-fi
+#ROMESYS=@ROME_INST_DIR@
+#
+#if [[ $ROMESYS == *ROME_INST_DIR* ]]
+#then
+#    echo 'ROMESYS will be configured after installation'
+#else
+#    echo "ROMESYS is set to " ${ROMESYS}
+#    export PATH=$ROMESYS/bin:${PATH}:${INSTALL_DIR}/bin
+#fi
 
 #needed by the analyzer
 ############################
