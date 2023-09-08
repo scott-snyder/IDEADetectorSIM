@@ -3,6 +3,7 @@
 // Include files
 #include <iostream>
 #include <vector>
+#include <optional>
 #include <math.h>
 
 #include "TROOT.h"
@@ -40,8 +41,8 @@ int main(int argc,char** argv)
   bool m_doCalibration = false;
   std::cout << "convert tracks" << std::endl;
 
-  gSystem->Load("$PRJBASE/simulation/build/lib/libGMCG4ClassesDict");
-  gSystem->Load("$PRJBASE/analyzer/GMC/obj/libGMCAnalyzer");
+  gSystem->Load("libGMCG4ClassesDict");
+  gSystem->Load("libGMCAnalyzer");
 
   if(argc<3) {
     std::cout << "USAGE: " << argv[0] << " [TRACKINPUT] [CALOINPUT] [OUTPUT] [DOTRACKING] [MAXEVENTS]" << std::endl;
@@ -77,17 +78,19 @@ int main(int argc,char** argv)
   TNtuple *rome_tree = 0;
   TNtuple *edm4hep_tree = 0;
 
+  std::optional<TFile> fo;
+
   if (doTracking){
 
-    TFile fo(argv[1]);
-    if (!fo.IsOpen()) {
+    fo.emplace (argv[1]);
+    if (!fo->IsOpen()) {
       std::cerr << "Cannot find file " << argv[1] << std::endl;
       return -1;
     }
 
     
     // -------------
-    TTree* RecoData = ((TTree*) fo.Get("RecoData"));
+    TTree* RecoData = ((TTree*) fo->Get("RecoData"));
     if (RecoData) RecoData->SetCacheSize();
     RecoDataRecoTracks = new TClonesArray("GMCRecoTracks");
     branchRecoDataRecoTracks = RecoData->GetBranch("RecoTracks");
