@@ -118,7 +118,7 @@
           <TreeName>MCHits</TreeName>
           <Read>true</Read>
           <Write>false</Write>
-          <Fill>true</Fill>
+          <Fill>false</Fill>
           <CompressionLevel>1</CompressionLevel>
           <CompressionAlgorithm>ZLIB</CompressionAlgorithm>
           <AutoSaveSize>300000000</AutoSaveSize>
