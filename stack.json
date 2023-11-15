@@ -1,7 +1,7 @@
 {
   "version": 5,
-  "prev": "b8bee1da78e71e81b5e3d58338b46bc687786eed",
-  "head": "3f30b68d482d267ab13dc5868666a9d5e93d414f",
+  "prev": "9482227c508f08b3bb0dc503f76f4cd8b664f526",
+  "head": "7b5b5280155a2bd9c35fe137aba928c01b813b3d",
   "applied": [
     "hepmc3.simulation",
     "cmake.simulation",
@@ -23,7 +23,8 @@
     "warn.GMC",
     "geant11.simulation",
     "build.converter",
-    "env.converter"
+    "env.converter",
+    "xtree.converter"
   ],
   "unapplied": [],
   "hidden": [],
@@ -90,6 +91,9 @@
     },
     "env.converter": {
       "oid": "3f30b68d482d267ab13dc5868666a9d5e93d414f"
+    },
+    "xtree.converter": {
+      "oid": "7b5b5280155a2bd9c35fe137aba928c01b813b3d"
     }
   }
 }

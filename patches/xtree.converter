@@ -1,0 +1,9 @@
+Bottom: 9e14233ba7d4fb4a9deaa8a7d0a439b7970c5db7
+Top:    9e14233ba7d4fb4a9deaa8a7d0a439b7970c5db7
+Author: scott snyder <snyder@bnl.gov>
+Date:   2023-11-15 15:26:24 -0500
+
+Write reconstructed track pt/theta/phi as a separate tree.
+
+(Otherwise all we get is the track state, from which we need to use the
+magnetic field to get the momentum.)
