@@ -107,8 +107,17 @@ int main(int argc,char** argv)
 
   }
   
+  TFile xf("xEDMOutput.root", "RECREATE");
+  auto xtree = new TTree ("xtree", "xtree");
+  std::vector<float> xtrk_p, xtrk_theta, xtrk_phi;
+  xtree->Branch ("xtrk_p", &xtrk_p);
+  xtree->Branch ("xtrk_theta", &xtrk_theta);
+  xtree->Branch ("xtrk_phi", &xtrk_phi);
+  xtree->SetDirectory(&xf);
+
   // edm4hep output file ------------------------------------------
   TFile fOutput(fOutNum,"RECREATE");
+
 
   // create a new podio::EventStore, linked to a podio::ROOTWriter,
   // to write the collections on the output file
@@ -184,6 +193,9 @@ int main(int argc,char** argv)
 
   // ---------------
   for(int ievt = 0; ievt < nevents; ievt++) {
+    xtrk_p.clear();
+    xtrk_theta.clear();
+    xtrk_phi.clear();
     std::cout << "****************** EVENT " << ievt << std::endl;
     if (doTracking){
       branchRecoDataRecoTracks->GetEntry(ievt);
@@ -195,6 +207,10 @@ int main(int argc,char** argv)
 	if(debug==true) std::cout << "-------- TRACK " << itrk << "/" << ntracks << std::endl;
 	
 	GMCRecoTracks* track = (GMCRecoTracks*) RecoDataRecoTracks->At(itrk);
+
+        xtrk_p.push_back (track->GetMomentum());
+        xtrk_theta.push_back (track->Gettheta());
+        xtrk_phi.push_back (track->Getphi());
 	
 	// get track variables GMCRecoTracks
 	Int_t trackID = track->GetTrkID();
@@ -374,7 +390,7 @@ int main(int argc,char** argv)
 	// radius @ innermost state
 	double tmpradius = 10000; // initialized to extremely big value by choice [mm]
 	for(int ihit = 0; ihit < statevector->GetEntries(); ihit++) {
-	  if(skipped.at(ihit)) continue;
+	  if(ihit < skipped.size() && skipped.at(ihit)) continue;
 	  TVector3 *state = (TVector3*) statevector->At(ihit);
 	  if(state==NULL) continue;
 	  // std::cout << state << " " << counter << " " << "hit " << hitindex.at(ihit) << " detector id " << detid.at(ihit) << " is skipped " << skipped.at(ihit)
@@ -543,6 +559,7 @@ int main(int argc,char** argv)
     m_reader.endOfEvent();
     if (l_writer != NULL)   l_writer->writeEvent();
     if (l_evtstore != NULL) l_evtstore->clearCollections();
+    xtree->Fill();
   }
 
   if (doTracking){
@@ -550,6 +567,11 @@ int main(int argc,char** argv)
     fTest->Close();
   }
     
+  xf.cd();
+  xtree->Write();
+  xf.Close();
+
+  fOutput.cd();
   // end of run
   fOutput.Write();
   fOutput.Close();
